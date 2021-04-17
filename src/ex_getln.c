@@ -1397,8 +1397,10 @@ cmdline_browse_history(
 	}
 	if ((c != K_UP && c != K_DOWN)
 		|| hiscnt == i
-		|| STRNCMP(get_histentry(histype)[hiscnt].hisstr,
-		    lookfor, (size_t)j) == 0)
+		|| (p_hic ? STRNICMP(get_histentry(histype)[hiscnt].hisstr,
+		    lookfor, (size_t)j) == 0
+			: STRNCMP(get_histentry(histype)[hiscnt].hisstr,
+		    lookfor, (size_t)j) == 0))
 	    break;
     }
 
