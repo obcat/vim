@@ -272,7 +272,7 @@ struct vimoption
 				// buffer-local option: global value
     idopt_T	indir;		// global option: PV_NONE;
 				// local option: indirect option index
-    char_u	*def_val[2];	// default values for variable (vi and vim)
+    char_u	*def_val[2];	// default values for variable (vim and vi)
 #ifdef FEAT_EVAL
     sctx_T	script_ctx;	// script context where the option was last set
 # define SCTX_INIT , {0, 0, 0, 1}
@@ -605,6 +605,9 @@ static struct vimoption options[] =
 			    {(char_u *)0L, (char_u *)0L}
 #endif
 			    SCTX_INIT},
+    {"cmdhistcase", "chc",  P_STRING,
+			    (char_u *)&p_chc, PV_NONE,
+			    {(char_u *)"match", (char_u *)0L} SCTX_INIT},
     {"clipboard",   "cb",   P_STRING|P_VI_DEF|P_ONECOMMA|P_NODUP,
 #ifdef FEAT_CLIPBOARD
 			    (char_u *)&p_cb, PV_NONE,

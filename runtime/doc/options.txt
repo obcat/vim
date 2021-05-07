@@ -1570,6 +1570,17 @@ A jump table for the options with a short description can be found at |Q_op|.
 	matter, include the keyword both the uppercase and lowercase:
 	"if,If,IF".
 
+							*'cmdhistcase'* *'chc'*
+'cmdhistcase' 'chc'	string	(default "match")
+			global
+	This option specifies how case is handled when recalling older or
+	recent command-line from history with |c_<Up>| or |c_<Down>|:
+	   followic	Follow the 'ignorecase' option
+	   followscs    Follow the 'smartcase' and 'ignorecase' options
+	   ignore	Ignore case
+	   match	Match case
+	   smart	Ignore case unless an upper case letter is used
+
 						*'clipboard'* *'cb'*
 'clipboard' 'cb'	string	(default "autoselect,exclude:cons\|linux"
 						  for X-windows, "" otherwise)

@@ -488,6 +488,13 @@ EXTERN long	p_cwh;		// 'cmdwinheight'
 EXTERN char_u	*p_cb;		// 'clipboard'
 #endif
 EXTERN long	p_ch;		// 'cmdheight'
+EXTERN char_u	*p_chc;		// 'cmdhistcase'
+EXTERN unsigned chc_flags;	// flags from 'cmdhistcase'
+#define CHC_FOLLOWIC		0x01
+#define CHC_IGNORE		0x02
+#define CHC_MATCH		0x04
+#define CHC_FOLLOWSCS		0x08
+#define CHC_SMART		0x10
 #ifdef FEAT_FOLDING
 EXTERN char_u	*p_cms;		// 'commentstring'
 #endif

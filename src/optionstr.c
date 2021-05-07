@@ -42,6 +42,7 @@ static char *(p_ssop_values[]) = {"buffers", "winpos", "resize", "winsize",
 #endif
 // Keep in sync with SWB_ flags in option.h
 static char *(p_swb_values[]) = {"useopen", "usetab", "split", "newtab", "vsplit", "uselast", NULL};
+static char *(p_chc_values[]) = {"followic", "ignore", "match", "followscs", "smart", NULL};
 static char *(p_tc_values[]) = {"followic", "ignore", "match", "followscs", "smart", NULL};
 #if defined(FEAT_TOOLBAR) && !defined(FEAT_GUI_MSWIN)
 static char *(p_toolbar_values[]) = {"text", "icons", "tooltips", "horiz", NULL};
@@ -110,6 +111,7 @@ didset_string_options(void)
     (void)opt_strings_flags(p_fdo, p_fdo_values, &fdo_flags, TRUE);
 #endif
     (void)opt_strings_flags(p_dy, p_dy_values, &dy_flags, TRUE);
+    (void)opt_strings_flags(p_chc, p_chc_values, &chc_flags, FALSE);
     (void)opt_strings_flags(p_tc, p_tc_values, &tc_flags, FALSE);
     (void)opt_strings_flags(p_ve, p_ve_values, &ve_flags, TRUE);
 #if defined(UNIX) || defined(VMS)
@@ -1966,6 +1968,13 @@ ambw_end:
     else if (varp == &p_bo)
     {
 	if (opt_strings_flags(p_bo, p_bo_values, &bo_flags, TRUE) != OK)
+	    errmsg = e_invarg;
+    }
+
+    // 'cmdhistcase'
+    else if (varp == &p_chc)
+    {
+	if (opt_strings_flags(p_chc, p_chc_values, &chc_flags, TRUE) != OK)
 	    errmsg = e_invarg;
     }
 
