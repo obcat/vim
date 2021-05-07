@@ -200,7 +200,7 @@ search_regcomp(
 	    save_re_pat(RE_SUBST, pat, magic);
     }
 
-    regmatch->rmm_ic = ignorecase(pat);
+    regmatch->rmm_ic = ignorecase(pat, FALSE);
     regmatch->rmm_maxcol = 0;
     regmatch->regprog = vim_regcomp(pat, magic ? RE_MAGIC : 0);
     if (regmatch->regprog == NULL)
@@ -402,22 +402,28 @@ last_search_pattern(void)
  * Uses the 'ignorecase' and 'smartcase' options.
  */
     int
-ignorecase(char_u *pat)
+ignorecase(
+    char_u  *pat,
+    int	    lit)    // Treat pattern as literal if TRUE, not if FALSE
 {
-    return ignorecase_opt(pat, p_ic, p_scs);
+    return ignorecase_opt(pat, lit, p_ic, p_scs);
 }
 
 /*
  * As ignorecase() put pass the "ic" and "scs" flags.
  */
     int
-ignorecase_opt(char_u *pat, int ic_in, int scs)
+ignorecase_opt(
+	char_u	*pat,
+	int	lit,    // Treat pattern as literal if TRUE, not if FALSE
+	int	ic_in,
+	int	scs)
 {
     int		ic = ic_in;
 
     if (ic && !no_smartcase && scs
 			    && !(ctrl_x_mode_not_default() && curbuf->b_p_inf))
-	ic = !pat_has_uppercase(pat);
+	ic = !pat_has_uppercase(pat, lit);
     no_smartcase = FALSE;
 
     return ic;
@@ -427,7 +433,9 @@ ignorecase_opt(char_u *pat, int ic_in, int scs)
  * Return TRUE if pattern "pat" has an uppercase character.
  */
     int
-pat_has_uppercase(char_u *pat)
+pat_has_uppercase(
+	char_u	*pat,
+	int	lit)    // Treat pattern as literal if TRUE, not if FALSE
 {
     char_u *p = pat;
 
@@ -441,7 +449,7 @@ pat_has_uppercase(char_u *pat)
 		return TRUE;
 	    p += l;
 	}
-	else if (*p == '\\')
+	else if (!lit && *p == '\\')
 	{
 	    if (p[1] == '_' && p[2] != NUL)  // skip "\_X"
 		p += 3;
@@ -3387,7 +3395,7 @@ find_pattern_in_path(
 	    goto fpip_end;
 	sprintf((char *)pat, whole ? "\\<%.*s\\>" : "%.*s", len, ptr);
 	// ignore case according to p_ic, p_scs and pat
-	regmatch.rm_ic = ignorecase(pat);
+	regmatch.rm_ic = ignorecase(pat, FALSE);
 	regmatch.regprog = vim_regcomp(pat, magic_isset() ? RE_MAGIC : 0);
 	vim_free(pat);
 	if (regmatch.regprog == NULL)

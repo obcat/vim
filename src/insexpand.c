@@ -1225,7 +1225,7 @@ ins_compl_dictionaries(
     }
 
     // ignore case depends on 'ignorecase', 'smartcase' and "pat"
-    regmatch.rm_ic = ignorecase(pat);
+    regmatch.rm_ic = ignorecase(pat, FALSE);
     while (*dict != NUL && !got_int && !compl_interrupted)
     {
 	// copy one dictionary file name into buf
@@ -2870,7 +2870,7 @@ ins_compl_get_exp(pos_T *ini)
 	case CTRL_X_TAGS:
 	    // set p_ic according to p_ic, p_scs and pat for find_tags().
 	    save_p_ic = p_ic;
-	    p_ic = ignorecase(compl_pattern);
+	    p_ic = ignorecase(compl_pattern, FALSE);
 
 	    // Find up to TAG_MANY matches.  Avoids that an enormous number
 	    // of matches is found when compl_pattern is empty

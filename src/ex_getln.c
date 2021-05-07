@@ -734,7 +734,7 @@ may_add_char_to_search(int firstc, int *c, incsearch_state_T *is_state)
 	    // If 'ignorecase' and 'smartcase' are set and the
 	    // command line has no uppercase characters, convert
 	    // the character to lowercase.
-	    if (p_ic && p_scs && !pat_has_uppercase(ccline.cmdbuff + skiplen))
+	    if (p_ic && p_scs && !pat_has_uppercase(ccline.cmdbuff + skiplen, FALSE))
 		*c = MB_TOLOWER(*c);
 	    if (*c == search_delim || vim_strchr((char_u *)(
 			     magic_isset() ? "\\~^$.*[" : "\\^$"), *c) != NULL)
@@ -1344,15 +1344,13 @@ cmdline_browse_history(
 	return CMDLINE_NOT_CHANGED;
 
     // Set the value of ic (ignorecase) according to 'cmdhistcase'.
-    // TODO: ignorecase[_opt] function is not suitable in this case, since
-    // "lookfor" is treated as literal rather than pattern.
     switch (chc_flags)
     {
 	case CHC_FOLLOWIC:		break;
 	case CHC_IGNORE:    ic = TRUE;	break;
 	case CHC_MATCH:	    ic = FALSE;	break;
-	case CHC_FOLLOWSCS: ic = lit_ignorecase(lookfor); break;
-	case CHC_SMART:	    ic = lit_ignorecase_opt(lookfor, TRUE, TRUE); break;
+	case CHC_FOLLOWSCS: ic = ignorecase(lookfor, TRUE); break;
+	case CHC_SMART:	    ic = ignorecase_opt(lookfor, TRUE, TRUE, TRUE); break;
     }
 
     i = hiscnt;
@@ -1502,54 +1500,6 @@ done:
     *curcmdstr = lookfor;
     *hiscnt_p = hiscnt;
     return res;
-}
-
-/*
- * Return TRUE when case should be ignored for literal pattern "lit".
- * Uses the 'ignorecase' and 'smartcase' options.
- */
-    int
-lit_ignorecase(char_u *lit)
-{
-    return lit_ignorecase_opt(lit, p_ic, p_scs);
-}
-
-/*
- * As lit_ignorecase() put pass the "ic" and "scs" flags.
- */
-    int
-lit_ignorecase_opt(char_u *lit, int ic_in, int scs)
-{
-    int		ic = ic_in;
-    if (ic && scs)
-	ic = !lit_has_uppercase(lit);
-    return ic;
-}
-
-/*
- * Return TRUE if literal pattern "lit" has an uppercase character.
- */
-    int
-lit_has_uppercase(char_u *lit)
-{
-    char_u *p = lit;
-
-    while (*p != NUL)
-    {
-	int		l;
-
-	if (has_mbyte && (l = (*mb_ptr2len)(p)) > 1)
-	{
-	    if (enc_utf8 && utf_isupper(utf_ptr2char(p)))
-		return TRUE;
-	    p += l;
-	}
-	else if (MB_ISUPPER(*p))
-	    return TRUE;
-	else
-	    ++p;
-    }
-    return FALSE;
 }
 
 /*

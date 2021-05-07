@@ -1674,8 +1674,8 @@ find_tags(
 	case TC_FOLLOWIC:		 break;
 	case TC_IGNORE:    p_ic = TRUE;  break;
 	case TC_MATCH:     p_ic = FALSE; break;
-	case TC_FOLLOWSCS: p_ic = ignorecase(pat); break;
-	case TC_SMART:     p_ic = ignorecase_opt(pat, TRUE, TRUE); break;
+	case TC_FOLLOWSCS: p_ic = ignorecase(pat, FALSE); break;
+	case TC_SMART:     p_ic = ignorecase_opt(pat, FALSE, TRUE, TRUE); break;
     }
 
     help_save = curbuf->b_help;

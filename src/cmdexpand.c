@@ -2083,7 +2083,7 @@ ExpandFromContext(
 	return FAIL;
 
     // set ignore-case according to p_ic, p_scs and pat
-    regmatch.rm_ic = ignorecase(pat);
+    regmatch.rm_ic = ignorecase(pat, FALSE);
 
     if (xp->xp_context == EXPAND_SETTINGS
 	    || xp->xp_context == EXPAND_BOOL_SETTINGS)
