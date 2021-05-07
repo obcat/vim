@@ -1281,9 +1281,6 @@ static struct vimoption options[] =
     {"history",	    "hi",   P_NUM|P_VIM,
 			    (char_u *)&p_hi, PV_NONE,
 			    {(char_u *)0L, (char_u *)50L} SCTX_INIT},
-    {"histignorecase",  "hic",   P_BOOL|P_VI_DEF,
-			    (char_u *)&p_hic, PV_NONE,
-			    {(char_u *)FALSE, (char_u *)0L} SCTX_INIT},
     {"hkmap",	    "hk",   P_BOOL|P_VI_DEF|P_VIM,
 #ifdef FEAT_RIGHTLEFT
 			    (char_u *)&p_hkmap, PV_NONE,

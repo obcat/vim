@@ -649,7 +649,6 @@ EXTERN int	p_hid;		// 'hidden'
 EXTERN char_u	*p_hl;		// 'highlight'
 EXTERN int	p_hls;		// 'hlsearch'
 EXTERN long	p_hi;		// 'history'
-EXTERN int	p_hic;		// 'histignorecase'
 #ifdef FEAT_RIGHTLEFT
 EXTERN int	p_hkmap;	// 'hkmap'
 EXTERN int	p_hkmapp;	// 'hkmapp'
