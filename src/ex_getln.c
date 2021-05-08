@@ -1343,16 +1343,6 @@ cmdline_browse_history(
     if (get_hislen() == 0 || firstc == NUL)	// no history
 	return CMDLINE_NOT_CHANGED;
 
-    // Set the value of ic (ignorecase) according to 'cmdhistcase'.
-    switch (chc_flags)
-    {
-	case CHC_FOLLOWIC:		break;
-	case CHC_IGNORE:    ic = TRUE;	break;
-	case CHC_MATCH:	    ic = FALSE;	break;
-	case CHC_FOLLOWSCS: ic = ignorecase(lookfor, TRUE); break;
-	case CHC_SMART:	    ic = ignorecase_opt(lookfor, TRUE, TRUE, TRUE); break;
-    }
-
     i = hiscnt;
 
     // save current command string so it can be restored later
@@ -1361,6 +1351,16 @@ cmdline_browse_history(
 	if ((lookfor = vim_strsave(ccline.cmdbuff)) == NULL)
 	    return CMDLINE_NOT_CHANGED;
 	lookfor[ccline.cmdpos] = NUL;
+    }
+
+    // Set the value of ic (ignorecase) according to 'cmdhistcase'.
+    switch (chc_flags)
+    {
+	case CHC_FOLLOWIC:		break;
+	case CHC_IGNORE:    ic = TRUE;	break;
+	case CHC_MATCH:	    ic = FALSE;	break;
+	case CHC_FOLLOWSCS: ic = ignorecase(lookfor, TRUE); break;
+	case CHC_SMART:	    ic = ignorecase_opt(lookfor, TRUE, TRUE, TRUE); break;
     }
 
     j = (int)STRLEN(lookfor);
