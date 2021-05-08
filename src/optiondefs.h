@@ -605,7 +605,7 @@ static struct vimoption options[] =
 			    {(char_u *)0L, (char_u *)0L}
 #endif
 			    SCTX_INIT},
-    {"cmdhistcase", "chc",  P_STRING|P_VIM,
+    {"cmdhistcase", "chc",  P_STRING|P_VI_DEF|P_VIM,
 			    (char_u *)&p_chc, PV_NONE,
 			    {(char_u *)"match", (char_u *)0L} SCTX_INIT},
     {"clipboard",   "cb",   P_STRING|P_VI_DEF|P_ONECOMMA|P_NODUP,
