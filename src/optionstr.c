@@ -1974,7 +1974,8 @@ ambw_end:
     // 'cmdhistcase'
     else if (varp == &p_chc)
     {
-	if (opt_strings_flags(p_chc, p_chc_values, &chc_flags, TRUE) != OK)
+	if (*p_chc == NUL
+	    || opt_strings_flags(p_chc, p_chc_values, &chc_flags, FALSE) != OK)
 	    errmsg = e_invarg;
     }
 
