@@ -111,7 +111,7 @@ didset_string_options(void)
     (void)opt_strings_flags(p_fdo, p_fdo_values, &fdo_flags, TRUE);
 #endif
     (void)opt_strings_flags(p_dy, p_dy_values, &dy_flags, TRUE);
-    (void)opt_strings_flags(p_chc, p_chc_values, &chc_flags, FALSE);
+    // (void)opt_strings_flags(p_chc, p_chc_values, &chc_flags, FALSE);
     (void)opt_strings_flags(p_tc, p_tc_values, &tc_flags, FALSE);
     (void)opt_strings_flags(p_ve, p_ve_values, &ve_flags, TRUE);
 #if defined(UNIX) || defined(VMS)
